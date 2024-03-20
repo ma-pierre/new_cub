@@ -1,43 +1,55 @@
-#include "cub.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mapierre <mapierre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 01:55:35 by mapierre          #+#    #+#             */
+/*   Updated: 2024/03/20 19:09:49 by mapierre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void    move_forward(t_info *info)
+# include "../includes/cub.h"
+
+void    move_forward(t_data *data)
 {
-    if (!worldMap[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)])
-			info->posX += info->dirX * info->moveSpeed;
-	if (!worldMap[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)])
-			info->posY += info->dirY * info->moveSpeed;
+    if (!worldMap[(int)(data->posX + data->dirX * data->moveSpeed)][(int)(data->posY)])
+			data->posX += data->dirX * data->moveSpeed;
+	if (!worldMap[(int)(data->posX)][(int)(data->posY + data->dirY * data->moveSpeed)])
+			data->posY += data->dirY * data->moveSpeed;
 }
 
-void    move_back(t_info *info)
+void    move_back(t_data *data)
 {
-    if (!worldMap[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)])
-			info->posX -= info->dirX * info->moveSpeed;
-	if (!worldMap[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)])
-			info->posY -= info->dirY * info->moveSpeed;
+    if (!worldMap[(int)(data->posX - data->dirX * data->moveSpeed)][(int)(data->posY)])
+			data->posX -= data->dirX * data->moveSpeed;
+	if (!worldMap[(int)(data->posX)][(int)(data->posY - data->dirY * data->moveSpeed)])
+			data->posY -= data->dirY * data->moveSpeed;
 }
 
-void move_left(t_info *info)
+void move_right(t_data *data)
 {
     double  perpDirX;
     double  perpDirY;
 
-    perpDirX = info->dirY;
-    perpDirY = -info->dirX;   
-    if (!worldMap[(int)(info->posX + perpDirX * info->moveSpeed)][(int)(info->posY)])
-        info->posX += perpDirX * info->moveSpeed;
-    if (!worldMap[(int)(info->posX)][(int)(info->posY + perpDirY * info->moveSpeed)])
-        info->posY += perpDirY * info->moveSpeed;
+    perpDirX = data->dirY;
+    perpDirY = -data->dirX;   
+    if (!worldMap[(int)(data->posX + perpDirX * data->moveSpeed)][(int)(data->posY)])
+        data->posX += perpDirX * data->moveSpeed;
+    if (!worldMap[(int)(data->posX)][(int)(data->posY + perpDirY * data->moveSpeed)])
+        data->posY += perpDirY * data->moveSpeed;
 }
 
-void move_right(t_info *info)
+void move_left(t_data *data)
 {
     double  perpDirX;
     double  perpDirY;
     
-    perpDirX = -info->dirY;
-    perpDirY = info->dirX;
-    if (!worldMap[(int)(info->posX + perpDirX * info->moveSpeed)][(int)(info->posY)])
-        info->posX += perpDirX * info->moveSpeed;
-    if (!worldMap[(int)(info->posX)][(int)(info->posY + perpDirY * info->moveSpeed)])
-        info->posY += perpDirY * info->moveSpeed;
+    perpDirX = -data->dirY;
+    perpDirY = data->dirX;
+    if (!worldMap[(int)(data->posX + perpDirX * data->moveSpeed)][(int)(data->posY)])
+        data->posX += perpDirX * data->moveSpeed;
+    if (!worldMap[(int)(data->posX)][(int)(data->posY + perpDirY * data->moveSpeed)])
+        data->posY += perpDirY * data->moveSpeed;
 }

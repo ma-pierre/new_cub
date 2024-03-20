@@ -1,8 +1,10 @@
-objs/move.o: srcs/move.c includes/cub.h includes/../minilibx-linux/mlx.h \
-  libft/libft.h
+objs/move.o: srcs/move.c srcs/../includes/cub.h \
+  includes/../minilibx-linux/mlx.h libft/libft.h includes/struct.h
 
-includes/cub.h:
+srcs/../includes/cub.h:
 
 includes/../minilibx-linux/mlx.h:
 
 libft/libft.h:
+
+includes/struct.h:

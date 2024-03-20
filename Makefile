@@ -6,9 +6,11 @@ DIR_SRCS		=	srcs
 
 DIR_OBJS		=	objs
 
-SRCS_NAMES		=	raycasting.c\
+SRCS_NAMES		=	main.c\
+					raycasting.c\
 					move.c\
 					move_camera.c\
+					keys.c\
 					
 
 OBJS_NAMES		=	${SRCS_NAMES:.c=.o}

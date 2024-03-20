@@ -1,27 +1,39 @@
-#include "cub.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move_camera.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mapierre <mapierre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 01:55:41 by mapierre          #+#    #+#             */
+/*   Updated: 2024/03/20 15:03:34 by mapierre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void    camera_left(t_info *info)
+# include "../includes/cub.h"
+
+void    camera_left(t_data *data)
 {
     double current_DirX;
     double current_PlaneX;
     
-    current_DirX = info->dirX;
-    current_PlaneX = info->planeX;
-	info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
-	info->dirY = current_DirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
-	info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
-	info->planeY = current_PlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
+    current_DirX = data->dirX;
+    current_PlaneX = data->planeX;
+	data->dirX = data->dirX * cos(data->rotSpeed) - data->dirY * sin(data->rotSpeed);
+	data->dirY = current_DirX * sin(data->rotSpeed) + data->dirY * cos(data->rotSpeed);
+	data->planeX = data->planeX * cos(data->rotSpeed) - data->planeY * sin(data->rotSpeed);
+	data->planeY = current_PlaneX * sin(data->rotSpeed) + data->planeY * cos(data->rotSpeed);
 }
 
-void    camera_right(t_info *info)
+void    camera_right(t_data *data)
 {	    
     double current_DirX;
     double current_PlaneX;
     
-    current_DirX = info->dirX;
-    current_PlaneX = info->planeX;
-	info->dirX = info->dirX * cos(-info->rotSpeed) - info->dirY * sin(-info->rotSpeed);
-	info->dirY = current_DirX * sin(-info->rotSpeed) + info->dirY * cos(-info->rotSpeed);
-	info->planeX = info->planeX * cos(-info->rotSpeed) - info->planeY * sin(-info->rotSpeed);
-	info->planeY = current_PlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
+    current_DirX = data->dirX;
+    current_PlaneX = data->planeX;
+	data->dirX = data->dirX * cos(-data->rotSpeed) - data->dirY * sin(-data->rotSpeed);
+	data->dirY = current_DirX * sin(-data->rotSpeed) + data->dirY * cos(-data->rotSpeed);
+	data->planeX = data->planeX * cos(-data->rotSpeed) - data->planeY * sin(-data->rotSpeed);
+	data->planeY = current_PlaneX * sin(-data->rotSpeed) + data->planeY * cos(-data->rotSpeed);
 }

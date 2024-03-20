@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mapierre <mapierre@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 01:56:10 by mapierre          #+#    #+#             */
+/*   Updated: 2024/03/20 19:19:27 by mapierre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "../includes/cub.h"
 
 
@@ -6,11 +18,11 @@ int	worldMap[24][24] = {
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+							{1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
+							{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1},
+							{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,1,1,0,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -18,29 +30,30 @@ int	worldMap[24][24] = {
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 						};
 
-void	verLine(t_info *info, int x, int y1, int y2, int color)
+//pour verline, peu etre je peu reduire le nb d'arg en creant les int dans ma struct???)
+//A MODIFIER POUR TEXTURES CA SERT PLUS
+void	verLine(t_data *data, int x, int y1, int y2, int color)
 {
-	int	y;
-
-	y = y1;
-	while (y <= y2)
+	//int	y;
+	//y = y1;
+	while (y1 <= y2)
 	{
-		mlx_pixel_put(info->mlx, info->win, x, y, color);
-		y++;
+		mlx_pixel_put(data->mlx, data->win, x, y1, color);
+		y1++;
 	}
 }
 
-void	calc(t_info *info)
+void	calc(t_data *data)
 {
 	int	x;
 
@@ -48,11 +61,11 @@ void	calc(t_info *info)
 	while (x < width)
 	{
 		double cameraX = 2 * x / (double)width - 1;
-		double rayDirX = info->dirX + info->planeX * cameraX;
-		double rayDirY = info->dirY + info->planeY * cameraX;
+		double rayDirX = data->dirX + data->planeX * cameraX;
+		double rayDirY = data->dirY + data->planeY * cameraX;
 		
-		int mapX = (int)info->posX;
-		int mapY = (int)info->posY;
+		int mapX = (int)data->posX;
+		int mapY = (int)data->posY;
 
 		//length of ray from current position to next x or y-side
 		double sideDistX;
@@ -73,22 +86,22 @@ void	calc(t_info *info)
 		if (rayDirX < 0)
 		{
 			stepX = -1;
-			sideDistX = (info->posX - mapX) * deltaDistX;
+			sideDistX = (data->posX - mapX) * deltaDistX;
 		}
 		else
 		{
 			stepX = 1;
-			sideDistX = (mapX + 1.0 - info->posX) * deltaDistX;
+			sideDistX = (mapX + 1.0 - data->posX) * deltaDistX;
 		}
 		if (rayDirY < 0)
 		{
 			stepY = -1;
-			sideDistY = (info->posY - mapY) * deltaDistY;
+			sideDistY = (data->posY - mapY) * deltaDistY;
 		}
 		else
 		{
 			stepY = 1;
-			sideDistY = (mapY + 1.0 - info->posY) * deltaDistY;
+			sideDistY = (mapY + 1.0 - data->posY) * deltaDistY;
 		}
 
 		while (hit == 0)
@@ -110,10 +123,9 @@ void	calc(t_info *info)
 			if (worldMap[mapX][mapY] > 0) hit = 1;
 		}
 		if (side == 0)
-			perpWallDist = (mapX - info->posX + (1 - stepX) / 2) / rayDirX;
+			perpWallDist = (mapX - data->posX + (1 - stepX) / 2) / rayDirX;
 		else
-			perpWallDist = (mapY - info->posY + (1 - stepY) / 2) / rayDirY;
-
+			perpWallDist = (mapY - data->posY + (1 - stepY) / 2) / rayDirY;
 		//Calculate height of line to draw on screen
 		int lineHeight = (int)(height / perpWallDist);
 
@@ -126,76 +138,12 @@ void	calc(t_info *info)
 			drawEnd = height - 1;
 
 		int	color;
-		if (worldMap[mapY][mapX] == 1)
-			color = 0xFF0000;
-		else if (worldMap[mapY][mapX] == 2)
-			color = 0x00FF00;
-		else if (worldMap[mapY][mapX] == 3)
-			color = 0x0000FF;
-		else if (worldMap[mapY][mapX] == 4)
-			color = 0xFFFFFF;
-		else
-			color = 0xFFFF00;
-		
+		color = 0xffc3f8; 
 		if (side == 1)
-			color = color / 2;
-
-		verLine(info, x, 0, drawStart, 255255);
-		verLine(info, x, drawStart, drawEnd, color);
-		verLine(info, x, drawEnd, height, 255255/3);
-		
+			color = 0xffa8f5;
+		verLine(data, x, 0, drawStart, 0xffdfdf);
+		verLine(data, x, drawStart, drawEnd, color);
+		verLine(data, x, drawEnd, height, 0xae84a9);
 		x++;
 	}
-}
-
-int	main_loop(t_info *info)
-{
-	calc(info);
-	// mlx_put_image_to_window(info->mlx, info->win, &info->img, 0, 0);
-    
-	return (0);
-}
-
-int	key_press(int key, t_info *info)
-{
-    //printf("%i\n", key);
-	if (key == 'w')
-		move_forward(info);
-	if (key == 's')
-		move_back(info);
-	if (key == 'd')
-		move_left(info);
-	if (key == 'a')
-		move_right(info);
-	if (key == 65363)
-		camera_right(info);
-    if (key == 65361) 
-		camera_left(info);
-	if (key == 65307)
-		exit(0);
-	calc(info);
-
-	return (0);
-}
-
-int	main(void)
-{
-	t_info info;
-	info.mlx = mlx_init();
-
-	info.posX = 12;
-	info.posY = 5;
-	info.dirX = -1;
-	info.dirY = 0;
-	info.planeX = 0;
-	info.planeY = 0.66;
-	info.moveSpeed = 0.05;
-	info.rotSpeed = 0.05;
-	
-	info.win = mlx_new_window(info.mlx, width, height, "mlx");
-
-	mlx_hook(info.win, 2, KeyPressMask, &key_press, &info);
-	// mlx_loop_hook(info.mlx, &main_loop, &info);
-
-	mlx_loop(info.mlx);
 }
