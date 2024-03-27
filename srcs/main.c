@@ -9,12 +9,18 @@ int	do_frame(t_data *data)
 	return (0);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_data data;
-    
-	data.mlx = mlx_init();
+	(void)ac;
+	(void)av;
 
+	data.mlx = mlx_init();
+	if (!data.mlx)
+	{
+		printf("pk tu veux casser mon cuuuuuuuub");
+		return (1);
+	}
 	data.posX = 12;
 	data.posY = 5;
 	data.dirX = -1;
