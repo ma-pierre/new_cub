@@ -6,7 +6,7 @@
 /*   By: mapierre <mapierre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:56:10 by mapierre          #+#    #+#             */
-/*   Updated: 2024/03/25 17:27:45 by mapierre         ###   ########.fr       */
+/*   Updated: 2024/03/31 23:40:03 by mapierre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,84 +53,90 @@ void	verLine(t_data *data, int x, int y1, int y2, int color)
 	}
 }
 
-void	calc(t_data *data)
+void    raycast_init_var(t_data *data, int x)
 {
-	int	x;
+    data->raycast_var.cameraX = 2 * x / (double)width - 1;
+    data->raycast_var.rayDirX = data->dirX + data->planeX * data->raycast_var.cameraX;
+    data->raycast_var.rayDirY = data->dirY + data->planeY * data->raycast_var.cameraX;
+    data->raycast_var.mapX = (int)data->posX;
+    data->raycast_var.mapY = (int)data->posY;
+    data->raycast_var.sideDistX = 0;
+    data->raycast_var.sideDistY = 0;
+    data->raycast_var.deltaDistX = fabs(1 / data->raycast_var.rayDirX);
+    data->raycast_var.deltaDistY = fabs(1 / data->raycast_var.rayDirY);
+    data->raycast_var.perpWallDist = 0;
+    data->raycast_var.stepX = 0;
+    data->raycast_var.stepY = 0;
+}
 
-	x = 0;
-	while (x < width)
+void    raycast_init_raydir(t_data *data)
+{       
+    if (data->raycast_var.rayDirX < 0)
+    {
+		data->raycast_var.stepX = -1;
+		data->raycast_var.sideDistX = (data->posX - data->raycast_var.mapX) * data->raycast_var.deltaDistX;
+	}
+	else
 	{
-		double cameraX = 2 * x / (double)width - 1;
-		double rayDirX = data->dirX + data->planeX * cameraX;
-		//printf("RAYDIR X =  %.8f\n", rayDirX);
-		double rayDirY = data->dirY + data->planeY * cameraX;
-		//printf("RAYDIR Y =  %.8f\n", rayDirY);
-		
-		int mapX = (int)data->posX;
-		int mapY = (int)data->posY;
+		data->raycast_var.stepX = 1;
+		data->raycast_var.sideDistX = (data->raycast_var.mapX + 1.0 - data->posX) * data->raycast_var.deltaDistX;
+	}
+	if (data->raycast_var.rayDirY < 0)
+	{
+		data->raycast_var.stepY = -1;
+		data->raycast_var.sideDistY = (data->posY - data->raycast_var.mapY) * data->raycast_var.deltaDistY;
+	}
+	else
+	{
+		data->raycast_var.stepY = 1;
+        data->raycast_var.sideDistY = (data->raycast_var.mapY + 1.0 - data->posY) * data->raycast_var.deltaDistY;
+	}
+}
 
-		//length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
-		
-		 //length of ray from one x or y-side to next x or y-side
-		double deltaDistX = fabs(1 / rayDirX);
-		double deltaDistY = fabs(1 / rayDirY);
-		double perpWallDist;
-		
-		//what direction to step in x or y-direction (either +1 or -1)
-		int stepX;
-		int stepY;
-		
-		int hit = 0; //was there a wall hit?
-		int side; //was a NS or a EW wall hit?
+int		raycast_dda(t_data *data)
+{
+		int	i;
+		int	side;
 
-		if (rayDirX < 0)
+		i = 0;
+		while (i == 0)
 		{
-			stepX = -1;
-			sideDistX = (data->posX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - data->posX) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (data->posY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - data->posY) * deltaDistY;
-		}
-		while (hit == 0)
-		{
-			//jump to next map square, OR in x-direction, OR in y-direction
-			if (sideDistX < sideDistY)
+			if (data->raycast_var.sideDistX < data->raycast_var.sideDistY)
 			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
+				data->raycast_var.sideDistX += data->raycast_var.deltaDistX;
+				data->raycast_var.mapX += data->raycast_var.stepX;
 				side = 0;
 			}
 			else
 			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
+				data->raycast_var.sideDistY += data->raycast_var.deltaDistY;
+				data->raycast_var.mapY += data->raycast_var.stepY;
 				side = 1;
 			}
-			//Check if ray has hit a wall
-			if (worldMap[mapX][mapY] > 0) hit = 1;
+			if (worldMap[data->raycast_var.mapX][data->raycast_var.mapY] > 0) i = 1;
 		}
-		if (side == 0)
-			perpWallDist = (mapX - data->posX + (1 - stepX) / 2) / rayDirX;
-		else
-			perpWallDist = (mapY - data->posY + (1 - stepY) / 2) / rayDirY;
-		//Calculate height of line to draw on screen
-		int lineHeight = (int)(height / perpWallDist);
+		return (side);
+}
 
-		//calculate lowest and highest pixel to fill in current stripe
+void	main_raycast(t_data *data)
+{
+	int	x;
+	int hit;
+	int side; 
+
+	x = 0;
+	while (x < width)
+	{
+		raycast_init_var(data, x);
+		raycast_init_raydir(data);
+		side = raycast_dda(data);
+		if (side == 0)
+			data->raycast_var.perpWallDist = (data->raycast_var.mapX - data->posX + (1 - data->raycast_var.stepX) / 2) / data->raycast_var.rayDirX;
+		else
+			data->raycast_var.perpWallDist = (data->raycast_var.mapY - data->posY + (1 - data->raycast_var.stepY) / 2) / data->raycast_var.rayDirY;
+			
+		int lineHeight = (int)(height / data->raycast_var.perpWallDist);
+
 		int drawStart = -lineHeight / 2 + height / 2;
 		if(drawStart < 0)
 			drawStart = 0;
@@ -140,24 +146,24 @@ void	calc(t_data *data)
 
 		int	color;
 		color = 0xffc3f8; 
-		    if (side == 0) { // Mur vertical
-        if (stepX > 0)
-            color = 0xFFC0CB; // Est - Rose
-        else
-            color = 0x0000FF; // Ouest - Bleu
-    } else { // Mur horizontal
-        if (stepY > 0)
+		if (side == 0)
+		{ // Mur vertical
+        	if (data->raycast_var.stepX > 0)
+            	color = 0xFFC0CB; // Est - Rose
+        	else
+            	color = 0x0000FF; // Ouest - Bleu
+    	} 
+		else
+		{ // Mur horizontal
+        if (data->raycast_var.stepY > 0)
             color = 0xFF0000; // Sud - Rouge
         else
             color = 0x000000; // Nord - Noir
-    }
+    	}
 
 		verLine(data, x, 0, drawStart, 0xffdfdf);
 		verLine(data, x, drawStart, drawEnd, color);
 		verLine(data, x, drawEnd, height, 0xae84a9);
 		x++;
 	}
-	//printf("////////////////////////////////////////////////////////////////////////\n");
-	//printf("////////////////////////////////////////////////////////////////////////\n");
-	//printf("////////////////////////////////////////////////////////////////////////\n");
 }

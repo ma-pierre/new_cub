@@ -6,7 +6,7 @@
 /*   By: mapierre <mapierre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:04:58 by mapierre          #+#    #+#             */
-/*   Updated: 2024/03/20 19:17:40 by mapierre         ###   ########.fr       */
+/*   Updated: 2024/03/31 23:37:19 by mapierre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,29 @@ void    move_back(t_data *data);
 void    move_left(t_data *data);
 void    move_right(t_data *data);
 //HANDLE_KEY_PRESS
+void    init_keys(t_data *data);
 int     key_press(int keycode, t_data *data);
 int     key_release(int keycode, t_data *data);
 int     handle_keypress(t_data *data);
 //RAYCASTING
-void	calc(t_data *data);
+void	main_raycast(t_data *data);
 void	verLine(t_data *data, int x, int y1, int y2, int color);
+void    raycast_init_var(t_data *data, int x);
+void    raycast_init_raydir(t_data *data);
+int		raycast_dda(t_data *data);
 
 //
 int     do_frame(t_data *data);
+void    init_player_direction(t_data *data);
+
+void    clean_game(t_data *data);
+
+// MINIMAP 
+void init_minimap(t_data *data);
+void draw_minimap(t_data *data);
+void update_player_position_on_minimap(t_data *data);
+void display_minimap(t_data *data);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 extern int worldMap[24][24];
 

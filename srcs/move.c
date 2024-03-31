@@ -6,7 +6,7 @@
 /*   By: mapierre <mapierre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:55:35 by mapierre          #+#    #+#             */
-/*   Updated: 2024/03/20 19:09:49 by mapierre         ###   ########.fr       */
+/*   Updated: 2024/03/30 18:21:21 by mapierre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    move_back(t_data *data)
 			data->posY -= data->dirY * data->moveSpeed;
 }
 
-void move_right(t_data *data)
+void move_left(t_data *data)
 {
     double  perpDirX;
     double  perpDirY;
@@ -41,7 +41,7 @@ void move_right(t_data *data)
         data->posY += perpDirY * data->moveSpeed;
 }
 
-void move_left(t_data *data)
+void move_right(t_data *data)
 {
     double  perpDirX;
     double  perpDirY;

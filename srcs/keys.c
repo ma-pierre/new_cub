@@ -1,5 +1,16 @@
 #include "../includes/cub.h"
 
+void    init_keys(t_data *data)
+{
+    data->keys.s = 0;
+    data->keys.d = 0;
+    data->keys.a = 0;
+    data->keys.w = 0;
+    data->keys.esc = 0;
+    data->keys.l_arrow = 0;
+    data->keys.r_arrow = 0;
+}
+
 int key_press(int keycode, t_data *data)
 {
     if (keycode == 's')
@@ -54,10 +65,18 @@ int	handle_keypress(t_data *data)
 		camera_left(data);
 	if (data->keys.esc)
     {
-		exit(0);
-        //MLXLOOPEND?????????
+		clean_game(data);
+        exit(0);
     }
-	//calc(data);
-
 	return (0);
+}
+
+void    clean_game(t_data *data)
+{
+
+	mlx_clear_window(data->mlx, data->win);
+	mlx_destroy_window(data->mlx, data->win);
+	mlx_destroy_display(data->mlx);
+	//ft_freetab(data->map);
+	free(data->mlx);
 }
