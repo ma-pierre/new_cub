@@ -6,7 +6,7 @@
 /*   By: mapierre <mapierre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:04:58 by mapierre          #+#    #+#             */
-/*   Updated: 2024/03/31 23:37:19 by mapierre         ###   ########.fr       */
+/*   Updated: 2024/04/02 01:54:26 by mapierre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int     key_press(int keycode, t_data *data);
 int     key_release(int keycode, t_data *data);
 int     handle_keypress(t_data *data);
 //RAYCASTING
-void	main_raycast(t_data *data);
-void	verLine(t_data *data, int x, int y1, int y2, int color);
+void	main_raycast(t_data *data, t_image win_img);
+void	verLine(t_image image, int x, int y1, int y2, int color);
 void    raycast_init_var(t_data *data, int x);
 void    raycast_init_raydir(t_data *data);
 int		raycast_dda(t_data *data);
@@ -63,6 +63,11 @@ int     do_frame(t_data *data);
 void    init_player_direction(t_data *data);
 
 void    clean_game(t_data *data);
+
+///img
+t_image	image_new(void *mlx, size_t w, size_t h);
+void	image_put_px(t_image img, int x, int y, int color);
+void	image_delete(void	*mlx, t_image img);
 
 // MINIMAP 
 void init_minimap(t_data *data);

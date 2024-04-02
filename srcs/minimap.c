@@ -44,3 +44,34 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color) {
     *(unsigned int*)dst = color;
 }
 
+/////////////////
+#include "../includes/cub.h"
+
+#define MINIMAP_SCALE 5 // Exemple de facteur d'échelle pour la taille de la minimap
+#define MINIMAP_SIZE 100 // Exemple de taille de la minimap (100x100 pixels)
+
+void draw_minimap(t_data *data) {
+    int x, y;
+    for (y = 0; y < 24; y++) { // Pour chaque ligne de la carte
+        for (x = 0; x < 24; x++) { // Pour chaque colonne de la carte
+            int color = worldMap[y][x] > 0 ? 0xFFFFFF : 0x000000; // Blanc pour les murs, Noir pour l'espace vide
+            mlx_draw_square(data->mlx, data->win, x * MINIMAP_SCALE, y * MINIMAP_SCALE, MINIMAP_SCALE, color);
+        }
+    }
+
+    // Dessiner le joueur sur la minimap
+    int player_x = (int)(data->posX * MINIMAP_SCALE);
+    int player_y = (int)(data->posY * MINIMAP_SCALE);
+    mlx_draw_square(data->mlx, data->win, player_x, player_y, MINIMAP_SCALE, 0xFF0000); // Rouge pour le joueur
+}
+
+void mlx_draw_square(void *mlx_ptr, void *win_ptr, int x, int y, int size, int color) {
+    int i, j;
+    for (i = 0; i < size; i++) {
+        for (j = 0; j < size; j++) {
+            mlx_pixel_put(mlx_ptr, win_ptr, x + i, y + j, color);
+        }
+    }
+}
+*/
+// Dans do_frame, appelez draw_minimap(data); après le rendu principal.

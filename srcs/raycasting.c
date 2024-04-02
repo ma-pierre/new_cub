@@ -6,7 +6,7 @@
 /*   By: mapierre <mapierre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:56:10 by mapierre          #+#    #+#             */
-/*   Updated: 2024/03/31 23:40:03 by mapierre         ###   ########.fr       */
+/*   Updated: 2024/04/02 03:48:12 by mapierre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,12 @@ int	worldMap[24][24] = {
 
 //pour verline, peu etre je peu reduire le nb d'arg en creant les int dans ma struct???)
 //A MODIFIER POUR TEXTURES CA SERT PLUS
-void	verLine(t_data *data, int x, int y1, int y2, int color)
+
+void	verLine(t_image image, int x, int y1, int y2, int color)
 {
-	//int	y;
-	//y = y1;
 	while (y1 <= y2)
 	{
-		mlx_pixel_put(data->mlx, data->win, x, y1, color);
+		image_put_px(image, x, y1, color);
 		y1++;
 	}
 }
@@ -118,10 +117,9 @@ int		raycast_dda(t_data *data)
 		return (side);
 }
 
-void	main_raycast(t_data *data)
+void	main_raycast(t_data *data, t_image win_img)
 {
 	int	x;
-	int hit;
 	int side; 
 
 	x = 0;
@@ -161,9 +159,9 @@ void	main_raycast(t_data *data)
             color = 0x000000; // Nord - Noir
     	}
 
-		verLine(data, x, 0, drawStart, 0xffdfdf);
-		verLine(data, x, drawStart, drawEnd, color);
-		verLine(data, x, drawEnd, height, 0xae84a9);
+		verLine(win_img, x, 0, drawStart, 0xffdfdf);
+		verLine(win_img, x, drawStart, drawEnd, color);
+		verLine(win_img, x, drawEnd, height, 0xae84a9);
 		x++;
 	}
 }

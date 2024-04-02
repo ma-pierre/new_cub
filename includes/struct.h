@@ -6,7 +6,7 @@
 /*   By: mapierre <mapierre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:05:10 by mapierre          #+#    #+#             */
-/*   Updated: 2024/03/31 23:20:35 by mapierre         ###   ########.fr       */
+/*   Updated: 2024/04/02 00:58:58 by mapierre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ typedef	struct s_raycast
 //	int		hit;
 //	int		side;
 }				t_raycast;
+
+typedef struct s_image
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_image;
 
 typedef struct	s_data
 {

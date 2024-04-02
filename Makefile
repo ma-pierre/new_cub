@@ -11,7 +11,7 @@ SRCS_NAMES		=	main.c\
 					move.c\
 					move_camera.c\
 					keys.c\
-					
+					image.c\
 
 OBJS_NAMES		=	${SRCS_NAMES:.c=.o}
 
